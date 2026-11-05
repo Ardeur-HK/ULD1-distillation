@@ -1,43 +1,32 @@
-# ULD-Distillation Framework
+# Cross-Tokenizer Distillation Study Archive
 
-This repository combines two complementary approaches to LLM model distillation:
-- [`llm-recipes`](https://github.com/Nicolas-BZRD/llm-recipes) - Provides model distillation methodology
-- [`llm-distillation`](https://github.com/Nicolas-BZRD/llm-distillation) - Offers training dataset acquisition techniques
+An exploratory collection of upstream LLM training and dataset tools, assembled while studying knowledge distillation and model merging.
 
-## Project Structure
-model-distillation/
-├── llm-recipes/ # Original distillation implementation
-├── llm-distillation/ # Original dataset acquisition code
-├── merged_examples/ # (Optional) Combined usage examples
-└── README.md # This documentation
+The two imported directories are unchanged upstream snapshots. Bundled datasets, predictions, confidence files, and benchmark results came with those snapshots; they are **upstream artifacts, not my experimental results**. This archive does not document a completed personal ULD training run or a model-merging experiment.
 
+## Contents and attribution
 
-## About the Components
+| Directory | Upstream source | Imported commit |
+| --- | --- | --- |
+| [`llm-recipes/`](llm-recipes/) | [Nicolas-BZRD/llm-recipes](https://github.com/Nicolas-BZRD/llm-recipes): training and ULD-style loss implementation | [`ab6e798`](https://github.com/Nicolas-BZRD/llm-recipes/commit/ab6e79800d28a1820348d72fc43ad964bb51ac29) |
+| [`llm-distillation/`](llm-distillation/) | [Nicolas-BZRD/llm-distillation](https://github.com/Nicolas-BZRD/llm-distillation): dataset, prompting, and benchmark materials | [`70e728f`](https://github.com/Nicolas-BZRD/llm-distillation/commit/70e728f33b15cdd8c15d09eec53b590ebf034907) |
 
-### llm-recipes
-Contains implementations of knowledge distillation techniques for large language models, including:
-- Model compression methods
-- Teacher-student architectures
-- Distillation loss functions
+The method is described in Boizard et al., [*Towards Cross-Tokenizer Distillation: the Universal Logit Distillation Loss for LLMs*](https://arxiv.org/abs/2402.12030). The original citation is preserved in the [upstream training README](llm-recipes/README.md#citation).
 
-### llm-distillation
-Provides tools for acquiring and processing datasets suitable for distillation training:
-- Dataset collection pipelines
-- Preprocessing utilities
-- Quality evaluation metrics
+## Inspect the archive
 
-## Usage Recommendation
+With Python 3.9+ and Git, run from a full clone:
 
-For optimal results:
-1. First use `llm-distillation` to acquire and prepare your training data
-2. Then apply distillation techniques from `llm-recipes` using the prepared datasets
+```bash
+python3 scripts/verify_upstream.py
+```
 
-## Acknowledgments
+This offline check compares all imported Git blobs with the pinned upstream commits, then checks the working files. It does not run training or benchmarks. See the [Quick Start](docs/quickstart.md) for expected output and limitations, and [contributions](docs/contributions.md) for the personal contribution boundary.
 
-This project builds upon the work of:
-- Nicolas-BZRD's original [`llm-recipes`](https://github.com/Nicolas-BZRD/llm-recipes)
-- Nicolas-BZRD's original [`llm-distillation`](https://github.com/Nicolas-BZRD/llm-distillation)
+The [source-provenance CI](.github/workflows/source-provenance.yml) runs the same check with full Git history and skips LFS payload downloads.
 
-## License
+The upstream README's example uses a Pythia-410M student and Llama-2-7B-Chat teacher. Code defaults instead name Llama-2-7B on both sides and leave distillation disabled; neither configuration establishes a personal training run.
 
-Please refer to the original licenses in each subdirectory before using this combined work.
+## Licensing and reuse
+
+No explicit license file was found in either imported snapshot. This collection does not grant a blanket license to upstream code, models, data, or results. Confirm the relevant authors' terms and the individual model/data permissions before reuse or redistribution. Training setup remains an upstream workflow with unresolved dependency and permission requirements; see the [training notes](docs/quickstart.md#training-status).

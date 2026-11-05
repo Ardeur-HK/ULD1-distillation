@@ -1,0 +1,20 @@
+name: Source provenance
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  imported-sources:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      GIT_LFS_SKIP_SMUDGE: '1'
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+          lfs: false
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Verify pinned source blobs without training or fetching
+        run: python scripts/verify_upstream.py
